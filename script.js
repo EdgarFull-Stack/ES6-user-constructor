@@ -28,12 +28,16 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
   const email = event.target.email.value.trim();
   const name = event.target.name.value.trim();
+
   messageDiv.textContent = "";
 
   const user = new User(name, email);
+
   user.toggleLoginStatus();
+
   console.log("User is logged in:" + user.isLoggedIn);
 
+  //3.
   if (user.isLoggedIn) {
     const welcomeMessage = document.createElement("h1");
     welcomeMessage.textContent = user.login();
@@ -46,6 +50,7 @@ form.addEventListener("submit", (event) => {
       user.toggleLoginStatus();
       welcomeMessage.textContent = user.logout();
       logoutButton.remove();
+      console.log("User is logged in:" + user.isLoggedIn);
     });
   }
 });
