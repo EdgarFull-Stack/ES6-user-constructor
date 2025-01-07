@@ -30,18 +30,18 @@ form.addEventListener("submit", (event) => {
   const user = new User(name, email);
   user.toggleLoginStatus();
   console.log(user.isLoggedIn);
-});
-
-if (user.isLoggedIn) {
   const welcomeMessage = document.createElement("h1");
-  welcomeMessage.textContent = "Logout";
+  welcomeMessage.textContent = user.login();
   const logoutButton = document.createElement("button");
   logoutButton.textContent = "Logout";
-  messageDiv.appendChild(welcomeMessage);
-  messageDiv.appendChild(logoutButton);
-}
 
-logoutButton.addEbventListener("click", () => {
-  user.toggleLoginStatus();
-  welcomeMessage.textContent = user.logout();
+  if (user.isLoggedIn) {
+    messageDiv.appendChild(welcomeMessage);
+    messageDiv.appendChild(logoutButton);
+  }
+
+  logoutButton.addEventListener("click", () => {
+    user.toggleLoginStatus();
+    welcomeMessage.textContent = user.logout();
+  });
 });
