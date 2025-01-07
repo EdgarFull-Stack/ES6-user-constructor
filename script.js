@@ -11,6 +11,7 @@ class User {
   }
   toggleLoginStatus() {
     this.isLoggedIn = !this.isLoggedIn;
+    this.saveToLocalStorage();
   }
   login() {
     return `Welcome, ${this.name}`;
@@ -27,21 +28,24 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
   const email = event.target.email.value.trim();
   const name = event.target.name.value.trim();
+  messageDiv.textContent = "";
+
   const user = new User(name, email);
   user.toggleLoginStatus();
-  console.log(user.isLoggedIn);
-  const welcomeMessage = document.createElement("h1");
-  welcomeMessage.textContent = user.login();
-  const logoutButton = document.createElement("button");
-  logoutButton.textContent = "Logout";
+  console.log("User is logged in:" + user.isLoggedIn);
 
   if (user.isLoggedIn) {
+    const welcomeMessage = document.createElement("h1");
+    welcomeMessage.textContent = user.login();
+    const logoutButton = document.createElement("button");
+    logoutButton.textContent = "Logout";
     messageDiv.appendChild(welcomeMessage);
     messageDiv.appendChild(logoutButton);
-  }
 
-  logoutButton.addEventListener("click", () => {
-    user.toggleLoginStatus();
-    welcomeMessage.textContent = user.logout();
-  });
+    logoutButton.addEventListener("click", () => {
+      user.toggleLoginStatus();
+      welcomeMessage.textContent = user.logout();
+      logoutButton.remove();
+    });
+  }
 });
